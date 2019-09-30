@@ -54,7 +54,16 @@ function renderInitialCards(cards) {
 }
 
 function renderSingleCard(card) {
-    board.insertAdjacentHTML("beforeend", `<div class="card">Card: ${card.id}</div>`)
+    board.insertAdjacentHTML("beforeend",
+    `<div class="card">
+        Card: ${card.id}
+        <ul>
+            <li>Number: ${card.number}</li>
+            <li>Color: ${card.color}</li>
+            <li>Shape: ${card.shape}</li>
+            <li>Fill: ${card.fill}</li>
+        </ul>
+    </div>`)
 }
 
 function removeCards(numCards) {
