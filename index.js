@@ -165,7 +165,7 @@ function swapCards(selectedCards) {
 
 //changes innerHTML, classes, and dataset information on the card we are swapping out
 function swapCard(card, newCard) {
-    card.innerHTML = svgBuilder(newCard)
+    card.querySelector(".shapes").innerHTML = svgBuilder(newCard)
     card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill}`
     card.dataset.id = `${newCard.id}`
     card.dataset.number = `${newCard.number}`
