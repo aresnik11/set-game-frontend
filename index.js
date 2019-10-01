@@ -27,23 +27,25 @@ container.addEventListener('click', function(e) {
 })
 
 function initializeGame(game) {
+    getCards()
+
+    // fetch("http://localhost:3000/api/v1/cards")
+    // .then(function(response) {
+    //     return response.json()
+    // })
+    // .then(shuffleCards)
+    // renderInitialCards(shuffledCards)
+    // removeCards(12)
+
+}
+
+function getCards() {
     fetch("http://localhost:3000/api/v1/cards")
     .then(function(response) {
         return response.json()
     })
     .then(shuffleCards)
-    renderInitialCards(shuffledCards)
-    removeCards(12)
-
 }
-
-// function getCards() {
-//     fetch("http://localhost:3000/api/v1/cards")
-//     .then(function(response) {
-//         return response.json()
-//     })
-//     .then(shuffleCards)
-// }
 
 function shuffleCards(cards) {
     while (cards.length) {
@@ -51,14 +53,14 @@ function shuffleCards(cards) {
         shuffledCards.push(cards[randomNumber])
         cards.splice(randomNumber, 1)
     }
-    // renderInitialCards(shuffledCards)
+    renderInitialCards(shuffledCards)
 }
 
 function renderInitialCards(cards) {
     for (let i=0; i<12; i++) {
         renderSingleCard(cards[i])
     }
-    // removeCards(12)
+    removeCards(12)
 }
 
 function renderSingleCard(card) {
