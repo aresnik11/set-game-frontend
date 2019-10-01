@@ -27,24 +27,15 @@ container.addEventListener('click', function(e) {
 })
 
 function initializeGame(game) {
-    getCards()
-
-    // fetch("http://localhost:3000/api/v1/cards")
-    // .then(function(response) {
-    //     return response.json()
-    // })
-    // .then(shuffleCards)
-    // renderInitialCards(shuffledCards)
-    // removeCards(12)
-
-}
-
-function getCards() {
     fetch("http://localhost:3000/api/v1/cards")
     .then(function(response) {
         return response.json()
     })
-    .then(shuffleCards)
+    .then(function(cards) {
+        shuffleCards(cards)
+        renderInitialCards(shuffledCards)
+        removeCards(12)
+    })
 }
 
 function shuffleCards(cards) {
@@ -53,14 +44,12 @@ function shuffleCards(cards) {
         shuffledCards.push(cards[randomNumber])
         cards.splice(randomNumber, 1)
     }
-    renderInitialCards(shuffledCards)
 }
 
 function renderInitialCards(cards) {
     for (let i=0; i<12; i++) {
         renderSingleCard(cards[i])
     }
-    removeCards(12)
 }
 
 function renderSingleCard(card) {
@@ -85,21 +74,77 @@ function removeCards(numCards) {
 board.addEventListener("click", function(e) {
     if (e.target.classList.contains("card")) {
         if (e.target.classList.contains("selected")) {
-            e.target.classList.remove("selected")
-            selectedCounter--
+            removeSelected(e.target)
         }
         else {
-            e.target.classList.add("selected")
-            selectedCounter++
+            addSelected(e.target)
             if (selectedCounter === 3) {
-                checkForSet()
+                const selectedCards = board.querySelectorAll('.card.selected')
+                if (checkForSet(selectedCards)) {
+                    console.log("YES! That is a set")
+                    swapCards(selectedCards)
+                }
+                else {
+                    console.log("Try again")
+                    selectedCards.forEach(function(card) {
+                        removeSelected(card)
+                    })
+                }
             }
         }
     }
 })
 
-function checkForSet() {
-    const selectedCards = board.querySelectorAll('.card.selected')
+function addSelected(element) {
+    element.classList.add("selected")
+    selectedCounter++
+}
+
+function removeSelected(element) {
+    element.classList.remove("selected")
+    selectedCounter--
+}
+
+function swapCards(selectedCards) {
+    selectedCards.forEach(function(card) {
+        removeSelected(card)
+        newCard = shuffledCards[0]
+        card.innerHTML = 
+            `Card: ${newCard.id}
+            <br>
+            Number: ${newCard.number}
+            <br>
+            Color: ${newCard.color}
+            <br>
+            Shape: ${newCard.shape}
+            <br>
+            Fill: ${newCard.fill}`
+        card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill}`
+        card.dataset.id = `${newCard.id}`
+        card.dataset.number = `${newCard.number}`
+        card.dataset.color = `${newCard.color}`
+        card.dataset.shape = `${newCard.shape}`
+        card.dataset.fill = `${newCard.fill}`
+        removeCards(1)
+    })
+}
+
+// function getThreeCardsAttributes() {
+//     const selectedCards = board.querySelectorAll('.card.selected')
+//     const numberArr = []
+//     const colorArr = []
+//     const shapeArr = []
+//     const fillArr = []
+
+//     selectedCards.forEach(function(card) {
+//         numberArr.push(card.dataset.number)
+//         colorArr.push(card.dataset.color)
+//         shapeArr.push(card.dataset.shape)
+//         fillArr.push(card.dataset.fill)
+//     })
+// }
+
+function checkForSet(selectedCards) {
     const numberArr = []
     const colorArr = []
     const shapeArr = []
@@ -146,11 +191,9 @@ function checkForSet() {
     }
 
     if (numberSatisfied === true && colorSatisfied === true && shapeSatisfied === true && fillSatisfied === true) {
-        alert("YES!")
         return true
     }
     else {
-        alert("Nope, try again")
         return false
     }
 
@@ -160,19 +203,15 @@ function allTheSame(array) {
     let propertyName = array[0]
     for (let i = 1; i < 3; i++) {
         if (array[i] != propertyName) {
-            console.log("not all the same")
             return false
         }
     }
-    console.log("all the same!")
     return true
 }
 
 function allTheDifferent(array) {
     if (array[0] != array[1] && array[0] != array[2] && array[1] != array[2]) {
-        console.log("all different!")
         return true
     }
-    console.log("Not all different")
     return false
 }
