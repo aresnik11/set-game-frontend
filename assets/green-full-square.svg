@@ -21,7 +21,7 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="green-none-square">
             <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-            <use fill-opacity="0" fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <use fill="#066449" fill-rule="evenodd" xlink:href="#path-1"></use>
             <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
             <path stroke="#066449" stroke-width="3" d="M13,3.5 C8.85786438,3.5 5.5,6.85786438 5.5,11 L5.5,93 C5.5,97.1421356 8.85786438,100.5 13,100.5 L95,100.5 C99.1421356,100.5 102.5,97.1421356 102.5,93 L102.5,11 C102.5,6.85786438 99.1421356,3.5 95,3.5 L13,3.5 Z" stroke-linejoin="square"></path>
         </g>
