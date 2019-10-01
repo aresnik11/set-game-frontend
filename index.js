@@ -64,17 +64,10 @@ function renderInitialCards(cards) {
 }
 
 function renderSingleCard(card) {
+    const svg = svgBuilder(card)
     board.insertAdjacentHTML("beforeend",
     `<div class="card ${card.number} ${card.color} ${card.shape} ${card.fill}" data-id="${card.id}" data-number="${card.number}" data-color="${card.color}" data-shape="${card.shape}" data-fill="${card.fill}">
-        Card: ${card.id}
-        <br>
-        Number: ${card.number}
-        <br>
-        Color: ${card.color}
-        <br>
-        Shape: ${card.shape}
-        <br>
-        Fill: ${card.fill}
+        ${svg}
     </div>`)
 }
 
@@ -175,4 +168,44 @@ function allTheDifferent(array) {
     }
     console.log("Not all different")
     return false
+}
+
+function svgBuilder(card) {
+    let num
+    if (card.number === "one") {
+        num = 1
+    }
+    else if (card.number === "two") {
+        num = 2
+    }
+    else if (card.number === "three") {
+        num = 3
+    }
+
+    let opacity
+    if (card.fill === "full") {
+        opacity = "fill-opacity='100'"
+    }
+    else if(card.fill === "half") {
+        opacity = "fill-opacity='0.1'"
+    }
+    else if(card.fill === "none") {
+        opacity = "fill-opacity='0'"
+    }
+
+    let svg = ""
+    for (let i = 0; i < num; i++) {
+        svg += `<svg height="50" width="50">`
+        if (card.shape === "circle") {
+            svg += `<circle cy="25" cx="25" r="25" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
+        }
+        else if (card.shape === "square") {
+            svg += `<rect width="50" height="50" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
+        }
+        else if (card.shape === "triangle") {
+            svg += `<polygon points="25,0 0,50 50,50" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
+        }
+        svg += "</svg>"
+    }
+    return svg
 }
