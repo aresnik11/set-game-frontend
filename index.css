@@ -9,8 +9,13 @@
     border-style: solid;
     border-width: 2px;
     border-color: black;
+    text-align: center
 }
 
 .selected {
     border-color: blue;
+}
+
+.shapes {
+    margin: 0 auto;
 }

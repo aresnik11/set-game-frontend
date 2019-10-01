@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="108px" height="108px" viewBox="0 0 108 108" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Purple-Half-Square</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9,0 L91,0 C95.9705627,0 100,4.02943725 100,9 L100,91 C100,95.9705627 95.9705627,100 91,100 L9,100 C4.02943725,100 0,95.9705627 0,91 L0,9 C0,4.02943725 4.02943725,0 9,0 Z" id="path-1"></path>
+        <filter x="-7.0%" y="-5.0%" width="114.0%" height="114.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-6.0%" y="-4.0%" width="112.0%" height="112.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Purple-Half-Square" transform="translate(4.000000, 2.000000)">
+            <g id="Rectangle">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill-opacity="0" fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                <path stroke="#640653" stroke-width="3" d="M9,1.5 C4.85786438,1.5 1.5,4.85786438 1.5,9 L1.5,91 C1.5,95.1421356 4.85786438,98.5 9,98.5 L91,98.5 C95.1421356,98.5 98.5,95.1421356 98.5,91 L98.5,9 C98.5,4.85786438 95.1421356,1.5 91,1.5 L9,1.5 Z" stroke-linejoin="square"></path>
+            </g>
+            <path d="M96,2 L4,96 L96,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M85,3 L3,87 L85,3 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M97,12 L12,98 L97,12 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M97,23 L23,98 L97,23 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M75,3 L2,78 L75,3 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M65,2 L2,67 L65,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M98,33 L35,98 L98,33 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M98,45 L46,98 L98,45 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"></path>
+            <path d="M42,2 L2,43 L42,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M29,2 L2,30 L29,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M98,82 L83,98 L98,82 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M17,2 L2,18 L17,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M98,57 L58,98 L98,57 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M54,2 L2,55 L54,2 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M98,70 L71,98 L98,70 Z" id="Line" stroke="#640653" stroke-width="2" stroke-linecap="square"></path>
+        </g>
+    </g>
+</svg>
