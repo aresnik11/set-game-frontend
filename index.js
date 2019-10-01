@@ -1,7 +1,7 @@
 const container = document.querySelector('#container')
 const board = document.querySelector('#board')
 const options = document.querySelector('#options')
-const shuffledCards = []
+let shuffledCards = []
 let selectedCounter = 0
 
 //create new game on click of the new game button
@@ -48,6 +48,7 @@ function initializeGame(game) {
 
 //randomly shuffles the cards
 function shuffleCards(cards) {
+    shuffledCards = []
     while (cards.length) {
         let randomNumber = Math.floor(Math.random() * cards.length)
         shuffledCards.push(cards[randomNumber])
@@ -62,8 +63,7 @@ function renderInitialCards(cards) {
     }
 }
 
-//adds a single card to the window with all of the card attributes
-function renderSingleCard(card) {
+function svgBuilder(card) {
     let svg = ""
     let num
 
@@ -80,32 +80,41 @@ function renderSingleCard(card) {
     for (let i = 0; i < num; i++) {
         svg += `<img src="./assets/${card.color}-${card.fill}-${card.shape}.svg">`
     }
+    return svg
+}
+
+//adds a single card to the window with all of the card attributes
+function renderSingleCard(card) {
+    let svg = svgBuilder(card)
     board.insertAdjacentHTML("beforeend",
     `<div class="card ${card.number} ${card.color} ${card.shape} ${card.fill}" data-id="${card.id}" data-number="${card.number}" data-color="${card.color}" data-shape="${card.shape}" data-fill="${card.fill}">
         <div class="shapes">${svg}</div>
     </div>`)
 }
 
-//adds no set button after board has been created
+//adds no set button and card count after board has been created
 function renderNoSetButton() {
     options.insertAdjacentHTML("beforeend", `<button data-action="noset">No Set</button>`)
+    options.insertAdjacentHTML("beforeend", `<div id="cardnum">Cards Left: ${shuffledCards.length}</div>`)
 }
 
-//removes dealt cards from the shuffled deck
+//removes dealt cards from the shuffled deck and updates card count displayed
 function removeCards(numCards) {
     shuffledCards.splice(0, numCards)
+    const cardNum = options.querySelector("#cardnum")
+    cardNum.innerText = "Cards Left: " + shuffledCards.length
 }
 
 //listens for clicks on the board
 board.addEventListener("click", function(e) {
-    if (e.target.classList.contains("card")) {
+    if (e.target.closest('.card')) {
         //if a card is clicked, show it as selected with a border
-        if (e.target.classList.contains("selected")) {
-            removeSelected(e.target)
+        if (e.target.closest('.card').classList.contains("selected")) {
+            removeSelected(e.target.closest('.card'))
         }
         //if it already was selected, remove the border so it is no longer selected
         else {
-            addSelected(e.target)
+            addSelected(e.target.closest('.card'))
             //if we selected 3 cards, check if they make a set
             if (selectedCounter === 3) {
                 const selectedCards = board.querySelectorAll('.card.selected')
@@ -142,24 +151,21 @@ function removeSelected(element) {
 function swapCards(selectedCards) {
     selectedCards.forEach(function(card) {
         removeSelected(card)
-        newCard = shuffledCards[0]
-        removeCards(1)
-        swapCard(card, newCard)
+        if (shuffledCards.length) {
+            newCard = shuffledCards[0]
+            removeCards(1)
+            swapCard(card, newCard)
+        }
+        else {
+            card.remove()
+            console.log("no cards left")
+        }
     })
 }
 
 //changes innerHTML, classes, and dataset information on the card we are swapping out
 function swapCard(card, newCard) {
-    card.innerHTML = 
-    `Card: ${newCard.id}
-    <br>
-    Number: ${newCard.number}
-    <br>
-    Color: ${newCard.color}
-    <br>
-    Shape: ${newCard.shape}
-    <br>
-    Fill: ${newCard.fill}`
+    card.innerHTML = svgBuilder(newCard)
     card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill}`
     card.dataset.id = `${newCard.id}`
     card.dataset.number = `${newCard.number}`
@@ -259,63 +265,123 @@ function allTheDifferent(array) {
 }
 
 
-// function svgBuilder(card) {
-//     let num
-//     if (card.number === "one") {
-//         num = 1
-//     }
-//     else if (card.number === "two") {
-//         num = 2
-//     }
-//     else if (card.number === "three") {
-//         num = 3
-//     }
-
-//     let opacity
-//     if (card.fill === "full") {
-//         opacity = "fill-opacity='100'"
-//     }
-//     else if(card.fill === "half") {
-//         opacity = "fill-opacity='0.1'"
-//     }
-//     else if(card.fill === "none") {
-//         opacity = "fill-opacity='0'"
-//     }
-
-//     let svg = ""
-//     for (let i = 0; i < num; i++) {
-//         svg += `<svg height="50" width="50">`
-//         if (card.shape === "circle") {
-//             svg += `<circle cy="25" cx="25" r="25" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
-//         }
-//         else if (card.shape === "square") {
-//             svg += `<rect width="50" height="50" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
-//         }
-//         else if (card.shape === "triangle") {
-//             svg += `<polygon points="25,0 0,50 50,50" stroke="${card.color}" stroke-width="3" fill="${card.color}" ${opacity} />`
-//         }
-//         svg += "</svg>"
-//     }
-//     return svg
-// }
 
 //listens for clicks on everything in the options div
 options.addEventListener("click", function(e) {
     //if no set button was clicked, check if there is a set on the board
     if (e.target.dataset.action === "noset") {
         const cardsOnBoard = board.querySelectorAll('.card')
-        checkForSetOnBoard(cardsOnBoard)
+        //if there is a set, alert the user
         if (checkForSetOnBoard(cardsOnBoard)) {
             console.log("there is a set on the board")
         }
+        //if there is not a set on the board, reshuffle the cards
         else {
             console.log("you're right! reshuffling...")
+            reshuffleAndRerender(cardsOnBoard)
         }
     }
 })
 
-function checkForSetOnBoard(cards) {
+//calls fetchCard on an array of cards (ones that are currently on the board)
+//uses Promise.all to collect all of the promises and then when they are all done
+//add cards on board to shuffledCards array, reshuffle, and repopulate board with cards
+function reshuffleAndRerender(cards) {
+
+    const promises = []
     cards.forEach(function(card) {
-         console.log(card)
+        promises.push(fetchCard(card))
+    })     
+    
+    Promise.all(promises).then(function(newCards) {
+        newCards.forEach(function(newCard) {
+            shuffledCards.push(newCard)
+        })
+        const currentDeck = shuffledCards
+        shuffleCards(currentDeck)
+        board.innerHTML = ""
+        selectedCounter = 0
+        renderInitialCards(shuffledCards)
+        removeCards(12)
     })
+}
+
+//fetches card from DB given data-id on div and returns the promise
+function fetchCard(card) {
+    return fetch(`http://localhost:3000/api/v1/cards/${card.dataset.id}`)
+    .then(function(response) {
+        return response.json()
+    })
+}
+
+//finds all combinations of 3 cards and checks if any of them are a set
+function checkForSetOnBoard(cards) {
+    let combos = k_combinations(cards, 3)
+    for (let i=0; i<combos.length; i++) {
+        if (checkForSet(combos[i])) {
+            return true
+        }
+    }
+}
+
+//function from: https://gist.github.com/axelpale/3118596
+//finds all combinations of k size within the given set
+function k_combinations(set, k) {
+    //borrowing slice method from the Array prototype
+    NodeList.prototype.slice = Array.prototype.slice
+
+	var i, j, combs, head, tailcombs;
+	
+	// There is no way to take e.g. sets of 5 elements from
+	// a set of 4.
+	if (k > set.length || k <= 0) {
+		return [];
+	}
+	
+	// K-sized set has only one K-sized subset.
+	if (k == set.length) {
+		return [set];
+	}
+	
+	// There is N 1-sized subsets in a N-sized set.
+	if (k == 1) {
+		combs = [];
+		for (i = 0; i < set.length; i++) {
+			combs.push([set[i]]);
+		}
+		return combs;
+	}
+	
+	// Assert {1 < k < set.length}
+	
+	// Algorithm description:
+	// To get k-combinations of a set, we want to join each element
+	// with all (k-1)-combinations of the other elements. The set of
+	// these k-sized sets would be the desired result. However, as we
+	// represent sets with lists, we need to take duplicates into
+	// account. To avoid producing duplicates and also unnecessary
+	// computing, we use the following approach: each element i
+	// divides the list into three: the preceding elements, the
+	// current element i, and the subsequent elements. For the first
+	// element, the list of preceding elements is empty. For element i,
+	// we compute the (k-1)-computations of the subsequent elements,
+	// join each with the element i, and store the joined to the set of
+	// computed k-combinations. We do not need to take the preceding
+	// elements into account, because they have already been the i:th
+	// element so they are already computed and stored. When the length
+	// of the subsequent list drops below (k-1), we cannot find any
+	// (k-1)-combs, hence the upper limit for the iteration:
+	combs = [];
+	for (i = 0; i < set.length - k + 1; i++) {
+		// head is a list that includes only our current element.
+		head = set.slice(i, i + 1);
+		// We take smaller combinations from the subsequent elements
+		tailcombs = k_combinations(set.slice(i + 1), k - 1);
+		// For each (k-1)-combination we join it with the current
+		// and store it to the set of k-combinations.
+		for (j = 0; j < tailcombs.length; j++) {
+			combs.push(head.concat(tailcombs[j]));
+		}
+	}
+	return combs;
 }
