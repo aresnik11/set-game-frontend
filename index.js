@@ -1,8 +1,10 @@
 const container = document.querySelector('#container')
 const board = document.querySelector('#board')
+const options = document.querySelector('#options')
 const shuffledCards = []
 let selectedCounter = 0
 
+//create new game on click of the new game button
 container.addEventListener('click', function(e) {
     if (e.target.dataset.action == "create") {
         fetch("http://localhost:3000/api/v1/games", {
@@ -20,49 +22,47 @@ container.addEventListener('click', function(e) {
             return response.json()
         })
         .then(function(game) {
+            //reset board and options, if there already was a board
             board.innerHTML = ""
+            options.innerHTML = ""
+            selectedCounter = 0
+            //initialize the game
             initializeGame(game)
         })
     }
 })
 
+//sets up initial board and game, fetches cards from DB
 function initializeGame(game) {
-    getCards()
-
-    // fetch("http://localhost:3000/api/v1/cards")
-    // .then(function(response) {
-    //     return response.json()
-    // })
-    // .then(shuffleCards)
-    // renderInitialCards(shuffledCards)
-    // removeCards(12)
-
-}
-
-function getCards() {
     fetch("http://localhost:3000/api/v1/cards")
     .then(function(response) {
         return response.json()
     })
-    .then(shuffleCards)
+    .then(function(cards) {
+        shuffleCards(cards)
+        renderInitialCards(shuffledCards)
+        renderNoSetButton()
+        removeCards(12)
+    })
 }
 
+//randomly shuffles the cards
 function shuffleCards(cards) {
     while (cards.length) {
         let randomNumber = Math.floor(Math.random() * cards.length)
         shuffledCards.push(cards[randomNumber])
         cards.splice(randomNumber, 1)
     }
-    renderInitialCards(shuffledCards)
 }
 
+//renders 12 cards to the window
 function renderInitialCards(cards) {
     for (let i=0; i<12; i++) {
         renderSingleCard(cards[i])
     }
-    removeCards(12)
 }
 
+//adds a single card to the window with all of the card attributes
 function renderSingleCard(card) {
     const svg = svgBuilder(card)
     board.insertAdjacentHTML("beforeend",
@@ -71,28 +71,106 @@ function renderSingleCard(card) {
     </div>`)
 }
 
+//adds no set button after board has been created
+function renderNoSetButton() {
+    options.insertAdjacentHTML("beforeend", `<button data-action="noset">No Set</button>`)
+}
+
+//removes dealt cards from the shuffled deck
 function removeCards(numCards) {
     shuffledCards.splice(0, numCards)
 }
 
+//listens for clicks on the board
 board.addEventListener("click", function(e) {
     if (e.target.classList.contains("card")) {
+        //if a card is clicked, show it as selected with a border
         if (e.target.classList.contains("selected")) {
-            e.target.classList.remove("selected")
-            selectedCounter--
+            removeSelected(e.target)
         }
+        //if it already was selected, remove the border so it is no longer selected
         else {
-            e.target.classList.add("selected")
-            selectedCounter++
+            addSelected(e.target)
+            //if we selected 3 cards, check if they make a set
             if (selectedCounter === 3) {
-                checkForSet()
+                const selectedCards = board.querySelectorAll('.card.selected')
+                //if it is a set, swap out the cards and show new ones
+                if (checkForSet(selectedCards)) {
+                    console.log("YES! That is a set")
+                    swapCards(selectedCards)
+                }
+                //if it isn't a set, unselect those cards
+                else {
+                    console.log("Try again")
+                    selectedCards.forEach(function(card) {
+                        removeSelected(card)
+                    })
+                }
             }
         }
     }
 })
 
-function checkForSet() {
-    const selectedCards = board.querySelectorAll('.card.selected')
+//add a selected class to a card (adds a border) and increment counter
+function addSelected(element) {
+    element.classList.add("selected")
+    selectedCounter++
+}
+
+//removes a selected class to a card (removes a border) and decrement counter
+function removeSelected(element) {
+    element.classList.remove("selected")
+    selectedCounter--
+}
+
+//swaps out card info for a specific number of cards based on new cards from the shuffled deck
+function swapCards(selectedCards) {
+    selectedCards.forEach(function(card) {
+        removeSelected(card)
+        newCard = shuffledCards[0]
+        removeCards(1)
+        swapCard(card, newCard)
+    })
+}
+
+//changes innerHTML, classes, and dataset information on the card we are swapping out
+function swapCard(card, newCard) {
+    card.innerHTML = 
+    `Card: ${newCard.id}
+    <br>
+    Number: ${newCard.number}
+    <br>
+    Color: ${newCard.color}
+    <br>
+    Shape: ${newCard.shape}
+    <br>
+    Fill: ${newCard.fill}`
+    card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill}`
+    card.dataset.id = `${newCard.id}`
+    card.dataset.number = `${newCard.number}`
+    card.dataset.color = `${newCard.color}`
+    card.dataset.shape = `${newCard.shape}`
+    card.dataset.fill = `${newCard.fill}`
+}
+
+// function getThreeCardsAttributes(selectedCards) {
+//     const numberArr = []
+//     const colorArr = []
+//     const shapeArr = []
+//     const fillArr = []
+
+//     selectedCards.forEach(function(card) {
+//         numberArr.push(card.dataset.number)
+//         colorArr.push(card.dataset.color)
+//         shapeArr.push(card.dataset.shape)
+//         fillArr.push(card.dataset.fill)
+//     })
+// }
+
+//gets attributes from the 3 selected cards and groups them
+//if they are all the same or all different for every attribute, return true (it is a set)
+//otherwise, return false
+function checkForSet(selectedCards) {
     const numberArr = []
     const colorArr = []
     const shapeArr = []
@@ -139,34 +217,29 @@ function checkForSet() {
     }
 
     if (numberSatisfied === true && colorSatisfied === true && shapeSatisfied === true && fillSatisfied === true) {
-        alert("YES!")
         return true
     }
     else {
-        alert("Nope, try again")
         return false
     }
-
 }
 
+//checks if all elements within an array are the same
 function allTheSame(array) {
     let propertyName = array[0]
     for (let i = 1; i < 3; i++) {
         if (array[i] != propertyName) {
-            console.log("not all the same")
             return false
         }
     }
-    console.log("all the same!")
     return true
 }
 
+//checks if all elements within an array are different
 function allTheDifferent(array) {
     if (array[0] != array[1] && array[0] != array[2] && array[1] != array[2]) {
-        console.log("all different!")
         return true
     }
-    console.log("Not all different")
     return false
 }
 
@@ -208,4 +281,23 @@ function svgBuilder(card) {
         svg += "</svg>"
     }
     return svg
+//listens for clicks on everything in the options div
+options.addEventListener("click", function(e) {
+    //if no set button was clicked, check if there is a set on the board
+    if (e.target.dataset.action === "noset") {
+        const cardsOnBoard = board.querySelectorAll('.card')
+        checkForSetOnBoard(cardsOnBoard)
+        if (checkForSetOnBoard(cardsOnBoard)) {
+            console.log("there is a set on the board")
+        }
+        else {
+            console.log("you're right! reshuffling...")
+        }
+    }
+})
+
+function checkForSetOnBoard(cards) {
+    cards.forEach(function(card) {
+         console.log(card)
+    })
 }
