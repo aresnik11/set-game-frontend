@@ -62,10 +62,10 @@ function initializeGame(game) {
         return response.json()
     })
     .then(function(cards) {
-        for (let i=0; i<12; i++) {
-            shuffledCards.push(cards[i])
-        }
-        // shuffleCards(cards)
+        // for (let i=0; i<12; i++) {
+        //     shuffledCards.push(cards[i])
+        // }
+        shuffleCards(cards)
         renderOptions()
         renderInitialCards(shuffledCards)
         removeCards(12)
