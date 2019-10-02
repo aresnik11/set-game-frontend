@@ -151,7 +151,7 @@ board.addEventListener("click", function(e) {
                         card.classList.add("fadeout")
                     })
                     setTimeout(function() {swapCards(selectedCards)
-                    }, 1000)
+                    }, 500)
                 }
                 //if it isn't a set, unselect those cards
                 else {
@@ -194,6 +194,10 @@ function swapCards(selectedCards) {
             newCard = shuffledCards[0]
             removeCards(1)
             swapCard(card, newCard)
+
+           setTimeout(function() {
+                card.classList.remove("fadein")
+           },500)
         }
         else {
             card.remove()
@@ -212,7 +216,7 @@ function swapCards(selectedCards) {
 //changes innerHTML, classes, and dataset information on the card we are swapping out
 function swapCard(card, newCard) {
     card.querySelector(".shapes").innerHTML = svgBuilder(newCard)
-    card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill}`
+    card.classList = `card ${newCard.number} ${newCard.color} ${newCard.shape} ${newCard.fill} fadein`
     card.dataset.id = `${newCard.id}`
     card.dataset.number = `${newCard.number}`
     card.dataset.color = `${newCard.color}`
@@ -315,8 +319,9 @@ options.addEventListener("click", function(e) {
     //if no set button was clicked, check if there is a set on the board
     if (e.target.dataset.action === "noset") {
         const cardsOnBoard = board.querySelectorAll('.card')
+        const testCards = board.querySelectorAll(".three")
         //if there is a set, alert the user
-        if (checkForSetOnBoard(cardsOnBoard)) {
+        if (checkForSetOnBoard(testCards)) {
             cardsOnBoard.forEach(function(card) {
                 card.classList.add("wrong")
             })
@@ -325,7 +330,7 @@ options.addEventListener("click", function(e) {
                 cardsOnBoard.forEach(function(card) {
                     card.classList.remove("wrong")
                 })
-            },900)
+            },500)
             console.log("there is a set on the board")
         }
         //if there is not a set on the board, reshuffle the cards
