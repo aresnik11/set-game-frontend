@@ -141,7 +141,7 @@ function renderOptions() {
     timerContainer.insertAdjacentHTML("beforeend",
     `<div class="ui statistic">
         <div class="value">
-            00:00
+            0
         </div>
         <div class="label">
             Time Elapsed
@@ -366,9 +366,8 @@ options.addEventListener("click", function(e) {
     //if no set button was clicked, check if there is a set on the board
     if (e.target.dataset.action === "noset") {
         const cardsOnBoard = board.querySelectorAll('.card')
-        const testCards = board.querySelectorAll(".three")
         //if there is a set, alert the user
-        if (checkForSetOnBoard(testCards)) {
+        if (checkForSetOnBoard(cardsOnBoard)) {
             cardsOnBoard.forEach(function(card) {
                 card.classList.add("wrong")
             })
