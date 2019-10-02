@@ -1,12 +1,29 @@
-const container = document.querySelector('#container')
-const board = document.querySelector('#board')
-const options = document.querySelector('#options')
+const body = document.querySelector('body')
+const container = document.querySelector('.container')
+const menu = document.querySelector('.menu')
+const options = document.querySelector('.options')
+const board = document.querySelector('.board')
+const rulesModal = document.querySelector('.my-modal.rules')
+const scoresModal = document.querySelector('.my-modal.scores')
+const gameOverModal = document.querySelector('.my-modal.game-over')
 let shuffledCards = []
 let selectedCounter = 0
 
+rulesModal.addEventListener('click', function(e) {
+    rulesModal.style.display = "none"
+})
+
+scoresModal.addEventListener('click', function(e) {
+    scoresModal.style.display = "none"
+})
+
+gameOverModal.addEventListener('click', function(e) {
+    gameOverModal.style.display = "none"
+})
+
 //create new game on click of the new game button
-container.addEventListener('click', function(e) {
-    if (e.target.dataset.action == "create") {
+document.addEventListener('click', function(e) {
+    if (e.target.dataset.action === "create") {
         fetch("http://localhost:3000/api/v1/games", {
             method: "POST",
             headers: {
@@ -30,6 +47,12 @@ container.addEventListener('click', function(e) {
             initializeGame(game)
         })
     }
+    else if (e.target.dataset.action === "rules") {
+        rulesModal.style.display = "block"
+    }
+    else if (e.target.dataset.action === "scores") {
+        scoresModal.style.display = "block"
+    }
 })
 
 //sets up initial board and game, fetches cards from DB
@@ -39,9 +62,12 @@ function initializeGame(game) {
         return response.json()
     })
     .then(function(cards) {
+        // for (let i=0; i<12; i++) {
+        //     shuffledCards.push(cards[i])
+        // }
         shuffleCards(cards)
+        renderOptions()
         renderInitialCards(shuffledCards)
-        renderNoSetButton()
         removeCards(12)
     })
 }
@@ -93,8 +119,8 @@ function renderSingleCard(card) {
 }
 
 //adds no set button and card count after board has been created
-function renderNoSetButton() {
-    options.insertAdjacentHTML("beforeend", `<button data-action="noset">No Set</button>`)
+function renderOptions() {
+    options.insertAdjacentHTML("beforeend", `<button data-action="noset" class="ui secondary button">No Set</button>`)
     options.insertAdjacentHTML("beforeend", `<div id="cardnum">Cards Left: ${shuffledCards.length}</div>`)
 }
 
@@ -171,7 +197,14 @@ function swapCards(selectedCards) {
         }
         else {
             card.remove()
-            console.log("no cards left")
+            const boardCards = board.querySelectorAll('.card')
+            setTimeout(function() {
+                if (!boardCards.length) {
+                    gameOverModal.querySelector('p').innerText = "No cards left!"
+                    gameOverModal.style.display = "block"
+                }
+            }, 500)
+
         }
     })
 }
@@ -277,8 +310,6 @@ function allTheDifferent(array) {
     return false
 }
 
-
-
 //listens for clicks on everything in the options div
 options.addEventListener("click", function(e) {
     //if no set button was clicked, check if there is a set on the board
@@ -311,6 +342,8 @@ options.addEventListener("click", function(e) {
             }
             else {
                 console.log("no cards left, GAME OVER")
+                gameOverModal.querySelector('p').innerText = "There are no more sets and no more cards in the deck"
+                gameOverModal.style.display = "block"
             }
         }
     }
