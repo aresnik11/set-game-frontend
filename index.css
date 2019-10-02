@@ -12,8 +12,6 @@
     text-align: center;
 }
 
-  
-
 .selected {
     border-color: blue;
 }
@@ -27,3 +25,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+
+.card:hover .shape, .card:active .shape {
+    transform: rotate(-180deg); }
+  .card .shape {
+    transition: all 0.8s ease-in-out;
+    transform-origin: 25px 25px; }

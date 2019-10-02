@@ -1,0 +1,15 @@
+
+  .card:hover .triangle, .card:active .shape {
+    transform: rotate(-180deg); }
+  .card .shape {
+    transition: all 0.8s ease-in-out;
+    transform-origin: 25px 25px; }
+@keyframes mymove {
+  0% {
+    opacity: 0; }
+  50% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+/*# sourceMappingURL=test.css.map */
