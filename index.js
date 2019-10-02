@@ -279,8 +279,13 @@ options.addEventListener("click", function(e) {
         }
         //if there is not a set on the board, reshuffle the cards
         else {
-            console.log("you're right! reshuffling...")
-            reshuffleAndRerender(cardsOnBoard)
+            if (shuffledCards.length) {
+                console.log("you're right! reshuffling...")
+                reshuffleAndRerender(cardsOnBoard)
+            }
+            else {
+                console.log("no cards left, GAME OVER")
+            }
         }
     }
 })
