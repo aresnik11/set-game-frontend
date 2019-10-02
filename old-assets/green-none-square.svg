@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="108px" height="108px" viewBox="0 0 108 108" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
-    <title>red-none-triangle</title>
+    <title>Green-None-Square</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <polygon id="path-1" points="54 2 104 102 4 102"></polygon>
+        <path d="M13,2 L95,2 C99.9705627,2 104,6.02943725 104,11 L104,93 C104,97.9705627 99.9705627,102 95,102 L13,102 C8.02943725,102 4,97.9705627 4,93 L4,11 C4,6.02943725 8.02943725,2 13,2 Z" id="path-1"></path>
         <filter x="-7.0%" y="-5.0%" width="114.0%" height="114.0%" filterUnits="objectBoundingBox" id="filter-2">
             <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
@@ -19,11 +19,11 @@
         </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="red-none-triangle">
+        <g id="Green-None-Square">
             <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
             <use fill-opacity="0" fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
             <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
-            <path stroke="#BF2C2C" stroke-width="3" d="M54,5.35410197 L6.42705098,100.5 L101.572949,100.5 L54,5.35410197 Z" stroke-linejoin="square"></path>
+            <path stroke="#066449" stroke-width="3" d="M13,3.5 C8.85786438,3.5 5.5,6.85786438 5.5,11 L5.5,93 C5.5,97.1421356 8.85786438,100.5 13,100.5 L95,100.5 C99.1421356,100.5 102.5,97.1421356 102.5,93 L102.5,11 C102.5,6.85786438 99.1421356,3.5 95,3.5 L13,3.5 Z" stroke-linejoin="square"></path>
         </g>
     </g>
 </svg>
