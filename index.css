@@ -33,13 +33,6 @@
   grid-gap: 10px;
   text-align: center;
 }
-/* 
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  text-align: center;
-} */
 
 .ui.statistic {
   display: block;
@@ -56,6 +49,8 @@
   border-color: black;
   text-align: center;
   border-radius: 15px;
+  margin: auto;
+  width: 95%
 }
 
 .card:hover {
@@ -141,6 +136,7 @@
 .shapes img {
   padding-left: 5px;
   padding-right: 5px;
+  width: 23%;
 }
 
 .shapes {
