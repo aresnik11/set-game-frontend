@@ -108,11 +108,11 @@ function removeCards(numCards) {
 //listens for clicks on the board
 board.addEventListener("click", function(e) {
     if (e.target.closest('.card')) {
-        //if a card is clicked, show it as selected with a border
+        //if it already was selected, remove the border so it is no longer selected
         if (e.target.closest('.card').classList.contains("selected")) {
             removeSelected(e.target.closest('.card'))
         }
-        //if it already was selected, remove the border so it is no longer selected
+        //if a card is clicked, show it as selected with a border
         else {
             addSelected(e.target.closest('.card'))
             //if we selected 3 cards, check if they make a set
@@ -126,9 +126,12 @@ board.addEventListener("click", function(e) {
                 //if it isn't a set, unselect those cards
                 else {
                     console.log("Try again")
-                    selectedCards.forEach(function(card) {
-                        removeSelected(card)
-                    })
+                    //slow down removing selected, so the third card spins if we don't have a set
+                    setTimeout(function() {
+                        selectedCards.forEach(function(card) {
+                            removeSelected(card)
+                        })
+                    }, 800)
                 }
             }
         }
