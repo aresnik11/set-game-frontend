@@ -1,25 +1,15 @@
-const body = document.querySelector('body')
 const container = document.querySelector('.container')
 const menu = document.querySelector('.menu')
 const options = document.querySelector('.options')
+const timerContainer = options.querySelector('#timer')
+const cardNum = options.querySelector('#cardnum')
 const board = document.querySelector('.board')
 const rulesModal = document.querySelector('.my-modal.rules')
 const scoresModal = document.querySelector('.my-modal.scores')
 const gameOverModal = document.querySelector('.my-modal.game-over')
 let shuffledCards = []
 let selectedCounter = 0
-
-rulesModal.addEventListener('click', function(e) {
-    rulesModal.style.display = "none"
-})
-
-scoresModal.addEventListener('click', function(e) {
-    scoresModal.style.display = "none"
-})
-
-gameOverModal.addEventListener('click', function(e) {
-    gameOverModal.style.display = "none"
-})
+let timer;
 
 //create new game on click of the new game button
 document.addEventListener('click', function(e) {
@@ -41,19 +31,49 @@ document.addEventListener('click', function(e) {
         .then(function(game) {
             //reset board and options, if there already was a board
             board.innerHTML = ""
-            options.innerHTML = ""
+            timerContainer.innerHTML = ""
+            cardNum.innerHTML = ""
             selectedCounter = 0
             //initialize the game
             initializeGame(game)
         })
     }
+    //shows rules modal if you click on the rules menu option
     else if (e.target.dataset.action === "rules") {
         rulesModal.style.display = "block"
     }
+    //shows scores modal if you click on the scores menu option
     else if (e.target.dataset.action === "scores") {
-        scoresModal.style.display = "block"
+        fetch("http://localhost:3000/api/v1/games")
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(games) {
+            scoresModal.style.display = "block"
+            for (let i=0; i<10; i++) {
+                scoresModal.querySelector('ol').insertAdjacentHTML("beforeend",
+                `<li>${games[i].score}</li>`)
+            }
+        })
     }
 })
+
+//closes any of the modals if you click anywhere on the screen (modal becomes the whole screen)
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('my-modal')) {
+        e.target.style.display = "none"
+    }
+    // rulesModal.style.display = "none"
+})
+
+// scoresModal.addEventListener('click', function(e) {
+//     scoresModal.style.display = "none"
+// })
+
+// gameOverModal.addEventListener('click', function(e) {
+//     gameOverModal.style.display = "none"
+// })
+
 
 //sets up initial board and game, fetches cards from DB
 function initializeGame(game) {
@@ -62,13 +82,11 @@ function initializeGame(game) {
         return response.json()
     })
     .then(function(cards) {
-        // for (let i=0; i<12; i++) {
-        //     shuffledCards.push(cards[i])
-        // }
         shuffleCards(cards)
         renderOptions()
         renderInitialCards(shuffledCards)
         removeCards(12)
+        startTimer()
     })
 }
 
@@ -120,15 +138,45 @@ function renderSingleCard(card) {
 
 //adds no set button and card count after board has been created
 function renderOptions() {
-    options.insertAdjacentHTML("beforeend", `<button data-action="noset" class="ui secondary button">No Set</button>`)
-    options.insertAdjacentHTML("beforeend", `<div id="cardnum">Cards Left: ${shuffledCards.length}</div>`)
+    timerContainer.insertAdjacentHTML("beforeend",
+    `<div class="ui statistic">
+        <div class="value">
+            00:00
+        </div>
+        <div class="label">
+            Time Elapsed
+        </div>
+    </div>
+    <button data-action="pause" class="ui secondary button">
+        <i class="pause icon"></i>
+        Pause
+    </button>`)
+    cardNum.insertAdjacentHTML("beforeend",
+    `<div class="ui statistic">
+        <div class="value">
+            ${shuffledCards.length}
+        </div>
+        <div class="label">
+            Cards Left
+        </div>
+    </div>
+    <button data-action="noset" class="ui secondary button">
+        No Set
+    </button>`)
 }
 
 //removes dealt cards from the shuffled deck and updates card count displayed
 function removeCards(numCards) {
     shuffledCards.splice(0, numCards)
-    const cardNum = options.querySelector("#cardnum")
-    cardNum.innerText = "Cards Left: " + shuffledCards.length
+    cardNum.querySelector(".value").innerText = shuffledCards.length
+}
+
+function startTimer() {
+    timer = setInterval(function() {
+        let current = timerContainer.querySelector(".value")
+        // debugger;
+        current.innerText = parseInt(current.innerText) + 1
+    }, 1000)
 }
 
 //listens for clicks on the board
@@ -146,16 +194,15 @@ board.addEventListener("click", function(e) {
                 const selectedCards = board.querySelectorAll('.card.selected')
                 //if it is a set, swap out the cards and show new ones
                 if (checkForSet(selectedCards)) {
-                    console.log("YES! That is a set")
                     selectedCards.forEach(function(card) {
                         card.classList.add("fadeout")
                     })
-                    setTimeout(function() {swapCards(selectedCards)
-                    }, 1000)
+                    setTimeout(function() {
+                        swapCards(selectedCards)
+                    },1000)
                 }
                 //if it isn't a set, unselect those cards
                 else {
-                    console.log("Try again")
                     selectedCards.forEach(function(card) {
                         card.classList.add("wrong")
                     })
@@ -326,7 +373,6 @@ options.addEventListener("click", function(e) {
                     card.classList.remove("wrong")
                 })
             },900)
-            console.log("there is a set on the board")
         }
         //if there is not a set on the board, reshuffle the cards
         else {
@@ -334,18 +380,26 @@ options.addEventListener("click", function(e) {
                     cardsOnBoard.forEach(function(card) {
                         card.classList.add("fadeout")
                     })
-                console.log("you're right! reshuffling...")
                 setTimeout(function() {
                     reshuffleAndRerender(cardsOnBoard)
                 }, 1000)
 
             }
             else {
-                console.log("no cards left, GAME OVER")
                 gameOverModal.querySelector('p').innerText = "There are no more sets and no more cards in the deck"
                 gameOverModal.style.display = "block"
             }
         }
+    }
+    else if (e.target.dataset.action === "pause") {
+        clearInterval(timer)
+        e.target.dataset.action = "play"
+        e.target.innerHTML = "<i class='play icon'></i>Play"
+    }
+    else if (e.target.dataset.action === "play") {
+        startTimer()
+        e.target.dataset.action = "pause"
+        e.target.innerHTML = "<i class='pause icon'></i>Pause"
     }
 })
 
@@ -363,8 +417,7 @@ function reshuffleAndRerender(cards) {
         newCards.forEach(function(newCard) {
             shuffledCards.push(newCard)
         })
-        const currentDeck = shuffledCards
-        shuffleCards(currentDeck)
+        shuffleCards(shuffledCards)
         board.innerHTML = ""
         selectedCounter = 0
         renderInitialCards(shuffledCards)
