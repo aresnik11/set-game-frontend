@@ -1,34 +1,52 @@
 #board {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
-    grid-gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+  grid-gap: 10px;
 }
 
 .card {
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
-    text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  text-align: center;
 }
 
 .selected {
-    border-color: blue;
+  border-color: blue;
+}
+
+/*.circle .selected img {
+    height: 200px;
+    transition: all 0.275s ease-out;
+    transform-style: preserve-3d; 
+    transform: rotateX(180deg); 
+}*/
+
+.unselected img {
+  transform: rotate(0deg);
+  transition: all 0.8s ease-in-out;
+  transform-origin: center;
+}
+
+.selected img {
+  transform: rotate(360deg);
+  transition: all 0.8s ease-in-out;
+  transform-origin: center;
+}
+
+.selected.circle img {
+    transform: rotateY(360deg);
+    transition: all 0.8s ease-in-out;
+    transform-origin: center;
 }
 
 .shapes img {
-    padding-left: 5px;
-    padding-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .shapes {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
-
-
-.card:hover .shape, .card:active .shape {
-    transform: rotate(-180deg); }
-  .card .shape {
-    transition: all 0.8s ease-in-out;
-    transform-origin: 25px 25px; }

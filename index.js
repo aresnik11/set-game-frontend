@@ -138,12 +138,14 @@ board.addEventListener("click", function(e) {
 //add a selected class to a card (adds a border) and increment counter
 function addSelected(element) {
     element.classList.add("selected")
+    element.classList.remove("unselected")
     selectedCounter++
 }
 
 //removes a selected class to a card (removes a border) and decrement counter
 function removeSelected(element) {
     element.classList.remove("selected")
+    element.classList.add("unselected")
     selectedCounter--
 }
 
