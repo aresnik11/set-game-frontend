@@ -121,17 +121,25 @@ board.addEventListener("click", function(e) {
                 //if it is a set, swap out the cards and show new ones
                 if (checkForSet(selectedCards)) {
                     console.log("YES! That is a set")
-                    swapCards(selectedCards)
+                    selectedCards.forEach(function(card) {
+                        card.classList.add("fadeout")
+                    })
+                    setTimeout(function() {swapCards(selectedCards)
+                    }, 1000)
                 }
                 //if it isn't a set, unselect those cards
                 else {
                     console.log("Try again")
+                    selectedCards.forEach(function(card) {
+                        card.classList.add("wrong")
+                    })
                     //slow down removing selected, so the third card spins if we don't have a set
                     setTimeout(function() {
                         selectedCards.forEach(function(card) {
+                            card.classList.remove("wrong")
                             removeSelected(card)
                         })
-                    }, 800)
+                    },900)
                 }
             }
         }
@@ -278,13 +286,28 @@ options.addEventListener("click", function(e) {
         const cardsOnBoard = board.querySelectorAll('.card')
         //if there is a set, alert the user
         if (checkForSetOnBoard(cardsOnBoard)) {
+            cardsOnBoard.forEach(function(card) {
+                card.classList.add("wrong")
+            })
+            //slow down removing selected, so the third card spins if we don't have a set
+            setTimeout(function() {
+                cardsOnBoard.forEach(function(card) {
+                    card.classList.remove("wrong")
+                })
+            },900)
             console.log("there is a set on the board")
         }
         //if there is not a set on the board, reshuffle the cards
         else {
             if (shuffledCards.length) {
+                    cardsOnBoard.forEach(function(card) {
+                        card.classList.add("fadeout")
+                    })
                 console.log("you're right! reshuffling...")
-                reshuffleAndRerender(cardsOnBoard)
+                setTimeout(function() {
+                    reshuffleAndRerender(cardsOnBoard)
+                }, 1000)
+
             }
             else {
                 console.log("no cards left, GAME OVER")

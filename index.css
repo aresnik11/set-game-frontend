@@ -6,22 +6,63 @@
 }
 
 .card {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-style: solid;
   border-width: 2px;
   border-color: black;
   text-align: center;
+  border-radius: 15px;
+}
+
+.card:hover {
+    border-color: #7FDBFF;
+    box-shadow: 0 2px 4px 0 #7FDBFF, 0 6px 20px 0 #7FDBFF;
+}
+
+.selected:hover {
+    border-color: #0074D9;
+    box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
 }
 
 .selected {
-  border-color: blue;
+    border-color: #0074D9;
+    box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
 }
 
-/*.circle .selected img {
-    height: 200px;
-    transition: all 0.275s ease-out;
-    transform-style: preserve-3d; 
-    transform: rotateX(180deg); 
-}*/
+.wrong {
+    border-color: #FF4136;
+    box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
+    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.wrong:hover {
+    border-color: #FF4136;
+    box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
+}
+
+@keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+.fadeout {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.8s, opacity 0.8s linear;
+}
 
 .unselected img {
   transform: rotate(0deg);
