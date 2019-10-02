@@ -182,6 +182,7 @@ function startTimer() {
 //listens for clicks on the board
 board.addEventListener("click", function(e) {
     if (e.target.closest('.card')) {
+
         //if it already was selected, remove the border so it is no longer selected
         if (e.target.closest('.card').classList.contains("selected")) {
             removeSelected(e.target.closest('.card'))
@@ -400,11 +401,15 @@ options.addEventListener("click", function(e) {
         clearInterval(timer)
         e.target.dataset.action = "play"
         e.target.innerHTML = "<i class='play icon'></i>Play"
+        board.classList.remove("fadein")
+        board.classList.add("fadeout")
     }
     else if (e.target.dataset.action === "play") {
         startTimer()
         e.target.dataset.action = "pause"
         e.target.innerHTML = "<i class='pause icon'></i>Pause"
+        board.classList.remove("fadeout")
+        board.classList.add("fadein")
     }
 })
 
