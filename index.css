@@ -5,6 +5,22 @@
     margin-bottom: 75px;
 }
 
+.ui.form .fields .field {
+    margin: auto;
+}
+
+/* only using important to overwrite padding-left and padding-right from semantic ui */
+.ui.item.menu .item {
+  padding-left: 2%!important;
+  padding-right: 2%!important;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
 /* modal tutorial from https://www.w3schools.com/howto/howto_css_modals.asp */
 .my-modal {
     display: none; /* Hidden by default */
@@ -38,7 +54,7 @@
   display: block;
 }
 
-.options h1 {
+.options h1, .login {
   text-align: center;
 }
 
@@ -121,7 +137,7 @@
   transform-origin: center;
 }
 
-.selected img {
+.selected img, .spin {
   transform: rotate(360deg);
   transition: all 0.8s ease-in-out;
   transform-origin: center;
