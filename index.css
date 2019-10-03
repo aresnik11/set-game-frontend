@@ -9,12 +9,6 @@
     margin: auto;
 }
 
-/* only using important to overwrite padding-left and padding-right from semantic ui */
-.ui.item.menu .item {
-  padding-left: 2%!important;
-  padding-right: 2%!important;
-}
-
 #grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -158,4 +152,8 @@
 .shapes {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+#logo img {
+  width: 27%;
 }

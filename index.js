@@ -33,7 +33,7 @@ loginForm.addEventListener('submit', function(e) {
     .then(function(user) {
         currentUser = user
         login.innerHTML =
-            `<h1>Welcome, ${currentUser.name}</h1>
+            `<h1>Welcome ${currentUser.name}</h1>
             <h3>To play, click New Game</h3>`
     })
 })
