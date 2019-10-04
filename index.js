@@ -42,6 +42,9 @@ loginForm.addEventListener('submit', function(e) {
 document.addEventListener('click', function(e) {
     //only create a new game on click of new game when user exists
     if (e.target.dataset.action === "create" && currentUser) {
+        if (gameOverModal.style.display = "block") {
+            gameOverModal.style.display = "none"
+        }
         createGame()
     }
     //if someone clicks new game and user does not exist, prompt them to log in
@@ -238,7 +241,7 @@ function renderHighScores(games) {
 //have access to game.user.name since passing in user along with game in the backend
 function renderHighScore(game) {
         scoresModal.querySelector('ol').insertAdjacentHTML("beforeend",
-        `<li>${game.user.name} - ${game.score} seconds</li>`)
+        `<br><li>${game.user.name} - ${game.score} seconds</li>`)
 }
 
 //listens for clicks on the board
