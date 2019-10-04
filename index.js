@@ -85,10 +85,13 @@ function createGame() {
     })
 }
 
-//closes any of the modals if you click anywhere on the screen (modal becomes the whole screen)
+//closes any of the modals if you click anywhere on the screen (modal becomes the whole screen) or the x-button
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('my-modal')) {
         e.target.style.display = "none"
+    }
+    else if (e.target.classList.contains('close')) {
+        e.target.closest('.my-modal').style.display = "none"
     }
 })
 
