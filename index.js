@@ -14,9 +14,16 @@ let selectedCounter = 0
 let timer;
 let currentUser;
 
+//listen for submits on "login" form and create a new user with the name they provided
 loginForm.addEventListener('submit', function(e) {
     e.preventDefault()
     const name = e.target.name.value
+    createUser(name)
+})
+
+//create new user with provided name and save new user to currentUser variable to be used later
+//replace login form with welcome message
+function createUser(name) {
     fetch(`http://localhost:3000/api/v1/users`, {
         method: "POST",
         headers: {
@@ -36,7 +43,7 @@ loginForm.addEventListener('submit', function(e) {
             `<h1>Welcome ${currentUser.name}</h1>
             <h3>To play, click New Game</h3>`
     })
-})
+}
 
 //create new game on click of the new game button
 document.addEventListener('click', function(e) {
@@ -314,10 +321,9 @@ function swapCards(selectedCards) {
             newCard = shuffledCards[0]
             removeCards(1)
             swapCard(card, newCard)
-
-           setTimeout(function() {
-                card.classList.remove("fadein")
-           },1200)
+            setTimeout(function() {
+                    card.classList.remove("fadein")
+            },1200)
         }
         //if there aren't any more cards in the deck, just remove the cards that made a set
         else {
@@ -353,7 +359,11 @@ function gameOver(text) {
     timerContainer.querySelector('button').remove()
 
     const score = parseInt(timerContainer.querySelector(".value").innerText)
+    updateGame(score)
+}
 
+//send a patch request to a specific game, updating status to completed and the score as their time
+function updateGame(score) {
     fetch(`http://localhost:3000/api/v1/games/${board.dataset.id}`, {
         method: "PATCH",
         headers: {
@@ -473,7 +483,7 @@ options.addEventListener("click", function(e) {
             }
             //if there aren't any cards left in the deck, game is over
             else {
-                gameOver("There are no more sets and no more cards in the deck")
+                gameOver("There are no more sets and no more cards in the deck.")
             }
         }
     }
