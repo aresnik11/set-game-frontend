@@ -20,58 +20,66 @@
       </a>
     </div>
     <div class="my-modal rules">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2>Rules</h2>
-          <br><br>
-          <!-- Content from https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf -->
-          <p>The object of the game is to identify sets of 3 cards from 12 cards placed on the board. The game ends when all of the cards have been dealt and there aren't any more sets.</p>
-          <p>Each card has 4 attributes:</p>
-          <div id="grid">
-            <div> Number
-              <ul>
-                <li>One</li>
-                <li>Two</li>
-                <li>Three</li>
-              </ul>
-            </div>
-            <div> Color
-              <ul>
-                <li>Red</li>
-                <li>Green</li>
-                <li>Purple</li>
-              </ul>
-            </div>
-            <div> Shape
-              <ul>
-                <li>Circle</li>
-                <li>Triangle</li>
-                <li>Square</li>
-              </ul>
-            </div>
-            <div> Fill
-              <ul>
-                <li>Solid</li>
-                <li>Striped</li>
-                <li>None</li>
-              </ul>
-            </div>
-          </div>
-          <p>A set consists of 3 cards where each of the cards' attributes are either the same or different. In other words, the three cards must either all have the same shape or all have a different shape, and the three cards must either all be the same color or all be different colors. If two cards have the same attribute and one card has a different attribute, it is not a set.</p>
-          <p>Examples of a set:
-            <ul>
-              <li>Ex 1</li>
-              <li>Ex 2</li>
-            </ul>
-          </p>
-          <p>Examples of not a set:
-            <ul>
-              <li>Ex 1</li>
-              <li>Ex 2</li>
-            </ul>
-          </p>
-          <p></p>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Rules</h2>
+        <br><br>
+        <!-- Content from https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf -->
+        <p>The object of the game is to identify sets of 3 cards from 12 cards placed on the board. The game ends when all of the cards have been dealt and there aren't any more sets.</p>
+        <p>Each card has 4 attributes:</p>
+        <div id="grid">
+          <div>Number</div>
+          <div>Color</div>
+          <div>Shape</div>
+          <div>Fill</div>
         </div>
+        <div id="grid2">
+          <div><br>
+              <img src="./assets/red-full-circle.svg"><br>
+              <img src="./assets/red-full-circle.svg"><img src="./assets/red-full-circle.svg"><br>
+              <img src="./assets/red-full-circle.svg"><img src="./assets/red-full-circle.svg"><img src="./assets/red-full-circle.svg">
+          </div>
+          <div><br>
+            <img src="./assets/red-full-square.svg"><br>
+            <img src="./assets/purple-full-square.svg"><br>
+            <img src="./assets/green-full-square.svg">
+          </div>
+          <div><br>
+            <img src="./assets/green-full-circle.svg"><br>
+            <img src="./assets/green-full-square.svg"><br>
+            <img src="./assets/green-full-triangle.svg">
+          </div>
+          <div><br>
+            <img src="./assets/purple-full-circle.svg"><br>
+            <img src="./assets/purple-half-circle.svg"><br>
+            <img src="./assets/purple-none-circle.svg">
+          </div>
+        </div>
+        <br>
+        <p>A set consists of 3 cards where each of the cards' attributes are either the same or different. In other words, the three cards must either all have the same shape or all have a different shape, and the three cards must either all be the same color or all be different colors. If two cards have the same attribute and one card has a different attribute, it is not a set.</p>
+        <p>Examples of a set:</p>
+        <div id="grid3">
+          <div><img src="./assets/one.png"></div>
+          <div><img src="./assets/two.png"></div>
+          <div><img src="./assets/three.png"></div>
+          <div class="explanation">
+            <p>All three cards have the same shape, same color, same shading, and different numbers.</p>
+          </div>
+          <div><img src="./assets/purp1.png"></div>
+          <div><img src="./assets/purp2.png"></div>
+          <div><img src="./assets/purp3.png"></div>
+          <div class="explanation">
+            <p>All three cards have the same color, same number, same shading, and different shapes.</p>
+          </div>
+          <div><img src="./assets/merp.png"></div>
+          <div><img src="./assets/meep.png"></div>
+          <div><img src="./assets/moop.png"></div>
+          <div class="explanation">
+            <p>All three cards have the same number, different colors, different shading, and different shapes.</p>
+          </div>
+        </div>
+        </div>
+      </div>
     </div>
     <div class="my-modal scores">
         <div class="modal-content">
