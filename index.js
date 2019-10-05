@@ -108,6 +108,7 @@ document.addEventListener('click', function(e) {
 //resets the board, timer, and all options
 function resetBoard() {
     board.innerHTML = ""
+    board.classList.remove("fadeout")
     timerContainer.innerHTML = ""
     clearInterval(timer)
     cardNum.innerHTML = ""
