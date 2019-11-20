@@ -24,7 +24,7 @@ loginForm.addEventListener('submit', function(e) {
 //create new user with provided name and save new user to currentUser variable to be used later
 //replace login form with welcome message
 function createUser(name) {
-    fetch(`http://localhost:3000/api/v1/users`, {
+    fetch(`https://set-backend.herokuapp.com/api/v1/users`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ document.addEventListener('click', function(e) {
 
 //creates a new game in the DB and starts setting it up on the frontend
 function createGame() {
-    fetch("http://localhost:3000/api/v1/games", {
+    fetch("https://set-backend.herokuapp.com/api/v1/games", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -117,7 +117,7 @@ function resetBoard() {
 
 //sets up initial board and game, fetches cards from DB
 function initializeGame(game) {
-    fetch("http://localhost:3000/api/v1/cards")
+    fetch("https://set-backend.herokuapp.com/api/v1/cards")
     .then(function(response) {
         return response.json()
     })
@@ -227,7 +227,7 @@ function startTimer() {
 
 //fetch games from DB - only sending top 10 scores
 function fetchGames() {
-    fetch("http://localhost:3000/api/v1/games")
+    fetch("https://set-backend.herokuapp.com/api/v1/games")
     .then(function(response) {
         return response.json()
     })
@@ -365,7 +365,7 @@ function gameOver(text) {
 
 //send a patch request to a specific game, updating status to completed and the score as their time
 function updateGame(score) {
-    fetch(`http://localhost:3000/api/v1/games/${board.dataset.id}`, {
+    fetch(`https://set-backend.herokuapp.com/api/v1/games/${board.dataset.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -536,7 +536,7 @@ function reshuffleAndRerender(cards) {
 
 //fetches card from DB given data-id on div and returns the promise
 function fetchCard(card) {
-    return fetch(`http://localhost:3000/api/v1/cards/${card.dataset.id}`)
+    return fetch(`https://set-backend.herokuapp.com/api/v1/cards/${card.dataset.id}`)
     .then(function(response) {
         return response.json()
     })
