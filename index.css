@@ -1,13 +1,16 @@
 .container {
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 75px;
-    margin-bottom: 75px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 75px;
+  margin-bottom: 75px;
 }
 
+/* centers form field */
 .ui.form .fields .field {
-    margin: auto;
+  margin: auto;
 }
+
+/* rules modal */
 
 #grid {
   display: grid;
@@ -46,7 +49,8 @@
   grid-column-end: span 3;
 }
 
-/* modal tutorial from https://www.w3schools.com/howto/howto_css_modals.asp */
+/* all modals - modal tutorial from https://www.w3schools.com/howto/howto_css_modals.asp */
+
 .my-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -69,22 +73,24 @@
     width: 60%; /* Could be more or less, depending on screen size */
   }
 
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover, .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 .modal-content h2 {
   display: inline;
 }
+
+/* board and options container */
 
 .board, .options {
   display: grid;
@@ -113,65 +119,65 @@
 }
 
 .card:hover {
-    border-color: #7FDBFF;
-    box-shadow: 0 2px 4px 0 #7FDBFF, 0 6px 20px 0 #7FDBFF;
+  border-color: #7FDBFF;
+  box-shadow: 0 2px 4px 0 #7FDBFF, 0 6px 20px 0 #7FDBFF;
 }
 
 .selected:hover {
-    border-color: #0074D9;
-    box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
+  border-color: #0074D9;
+  box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
 }
 
 .selected {
-    border-color: #0074D9;
-    box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
+  border-color: #0074D9;
+  box-shadow: 0 2px 4px 0 #0074D9, 0 6px 20px 0 #0074D9;
 }
 
 .wrong {
-    border-color: #FF4136;
-    box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
-    animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+  border-color: #FF4136;
+  box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
+  animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 .wrong:hover {
-    border-color: #FF4136;
-    box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
+  border-color: #FF4136;
+  box-shadow: 0 2px 4px 0 #FF4136, 0 6px 20px 0 #FF4136;
 }
 
 @keyframes shake {
-    10%, 90% {
-      transform: translate3d(-1px, 0, 0);
-    }
-    
-    20%, 80% {
-      transform: translate3d(2px, 0, 0);
-    }
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
   
-    30%, 50%, 70% {
-      transform: translate3d(-4px, 0, 0);
-    }
-  
-    40%, 60% {
-      transform: translate3d(4px, 0, 0);
-    }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
   }
 
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
 .fadeout {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
 .fadein {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.5s linear;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
 }
 
 .quickfadein {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.1s linear;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.1s linear;
 }
 
 .unselected img {
@@ -187,9 +193,9 @@
 }
 
 .selected.circle img {
-    transform: rotateY(360deg);
-    transition: all 0.8s ease-in-out;
-    transform-origin: center;
+  transform: rotateY(360deg);
+  transition: all 0.8s ease-in-out;
+  transform-origin: center;
 }
 
 .shapes img {
