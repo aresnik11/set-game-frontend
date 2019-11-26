@@ -1,5 +1,7 @@
 # Set Game
 
+*Developed by [Amy Resnik](https://github.com/aresnik11) and [Dan Behrman](https://github.com/DanBehrman).*
+
 Set Game is single page app that lets user play the game SET.
 
 The frontend repo is deployed via Netlify, and the backend repo ([here](https://github.com/aresnik11/set-game-backend)) is deployed via Heroku. Visit [https://best-set-game.netlify.com](https://best-set-game.netlify.com) to play!
