@@ -16,6 +16,12 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 </head>
 <body>
+    <!-- loading modal, shows up until we hit the heroku backend -->
+    <div class="ui segment">
+        <div class="ui active dimmer">
+          <div class="ui huge text loader">Loading</div>
+        </div>
+
     <!-- menu nav bar -->
     <div class="ui black three item inverted menu massive fixed sticky">
       <a class="item" data-action="create">
@@ -146,5 +152,6 @@
       <div class="board">
       </div>
     </div>
+  </div>
 </body>
 </html>

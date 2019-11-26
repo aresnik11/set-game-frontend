@@ -5,6 +5,16 @@
   margin-bottom: 75px;
 }
 
+/* loading modal */
+.ui.segment {
+  height: 100%;
+}
+
+/* makes header stay all the way to the left with the modal */
+.ui.sticky.fixed {
+  left: 0;
+}
+
 /* centers form field */
 .ui.form .fields .field {
   margin: auto;

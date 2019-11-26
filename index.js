@@ -9,10 +9,17 @@ const board = document.querySelector('.board')
 const rulesModal = document.querySelector('.my-modal.rules')
 const scoresModal = document.querySelector('.my-modal.scores')
 const gameOverModal = document.querySelector('.my-modal.game-over')
+const loadingModal = document.querySelector('.ui.segment .ui.active.dimmer')
 let shuffledCards = []
 let selectedCounter = 0
 let timer;
 let currentUser;
+
+// when the content loads, try to hit the heroku backend. if successful, close the overlay
+document.addEventListener('DOMContentLoaded', function(e) {
+    fetch(`https://set-backend.herokuapp.com/api/v1`)
+    .then(() => loadingModal.classList.remove("active"))
+})
 
 //listen for submits on "login" form and create a new user with the name they provided
 loginForm.addEventListener('submit', function(e) {
