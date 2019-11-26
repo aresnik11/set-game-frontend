@@ -2,6 +2,10 @@
 
 Set Game is single page app that lets user play the game SET.
 
+The frontend repo is deployed via Netlify, and the backend repo ([here](https://github.com/aresnik11/set-game-backend)) is deployed via Heroku. Visit [https://best-set-game.netlify.com](https://best-set-game.netlify.com) to play!
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1c669172-c73c-444c-af63-03d51895a8c8/deploy-status)](https://app.netlify.com/sites/best-set-game/deploys)
+
 ![Set Game](https://user-images.githubusercontent.com/8761638/69589475-2f4b0200-0fba-11ea-8f41-5a131079261f.png)
 
 ## Demo
@@ -41,7 +45,10 @@ To test on your own machine:
 1. Visit the backend repo [here](https://github.com/aresnik11/set-game-backend) and follow instructions on the README. The backend server should be started before the next steps are run.
 2. Clone this repository
 3. Update all fetch request urls in `index.js` to the url where your rails server is running
-4. In terminal run `npm install`
-5. In terminal run `npm start`
+4. In terminal run
+```
+npm install
+npm start
+```
 
 ## Enjoy!
